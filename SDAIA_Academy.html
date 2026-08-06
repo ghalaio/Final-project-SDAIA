@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDAIA Academy</title>
+<style>
+:root{
+  --green:#0b6e4f;
+  --green-dark:#053d2c;
+  --teal:#0ea5a0;
+  --blue:#0284c7;
+  --gold:#c9a24b;
+  --bg:#f4f8f7;
+  --card:#ffffff;
+  --text:#1c2a27;
+  --muted:#68766f;
+  --border:#e1e9e5;
+  --green-soft:#e6f4ef;
+  --blue-soft:#e6f3fb;
+  --danger:#dc2626;
+  --radius:14px;
+  --shadow:0 2px 10px rgba(11,110,79,.08), 0 1px 2px rgba(0,0,0,.04);
+}
+body.dark{
+  --bg:#0d1614;
+  --card:#141f1c;
+  --text:#e7efec;
+  --muted:#94a39d;
+  --border:#25332f;
+  --green-soft:#123b2c;
+  --blue-soft:#0b2f3f;
+  --shadow:0 2px 12px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:'Segoe UI', Tahoma, Arial, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  transition:background .25s, color .25s;
+}
+img{max-width:100%;}
+button{font-family:inherit;cursor:pointer;}
+a{color:var(--blue);}
+.hidden{display:none !important;}
+
+/* ---------- Logo ---------- */
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-text{line-height:1.1;}
+.logo-text .name{font-weight:800;font-size:17px;color:var(--text);}
+.logo-text .sub{font-size:11px;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;}
+.logo-img{height:34px;width:auto;display:block;}
+.logo-divider{width:1px;height:26px;background:var(--border);}
+.academy-tag{font-weight:800;font-size:12.5px;color:var(--green);letter-spacing:1px;text-transform:uppercase;}
+.login-card .logo-img{height:48px;}
+.login-card .academy-tag{font-size:14px;}
+
+/* ---------- Top bar ---------- */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 26px;background:var(--card);border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:50;
+}
+.topbar-actions{display:flex;align-items:center;gap:14px;}
+.icon-btn{
+  background:var(--green-soft);border:none;border-radius:50%;
+  width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+  font-size:16px;position:relative;color:var(--green);
+}
+.icon-btn:hover{filter:brightness(0.95);}
+.badge-dot{
+  position:absolute;top:-2px;right:-2px;background:var(--danger);color:#fff;
+  font-size:10px;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--card);
+}
+.user-chip{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);}
+.avatar{
+  width:32px;height:32px;border-radius:50%;
+  background:linear-gradient(135deg,var(--green),var(--blue));
+  color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;
+}
+.notif-panel{
+  position:absolute;top:56px;right:26px;width:300px;background:var(--card);
+  border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:10px;z-index:60;
+}
+.notif-item{padding:10px;border-radius:10px;font-size:13px;color:var(--text);}
+.notif-item:hover{background:var(--green-soft);}
+.notif-item .t{color:var(--muted);font-size:11px;margin-top:2px;}
+
+/* ---------- Layout wrapper ---------- */
+.page{max-width:1180px;margin:0 auto;padding:28px 20px 60px;}
+
+/* ---------- Login ---------- */
+.login-wrap{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--green-dark) 0%, var(--teal) 55%, var(--blue) 100%);
+  padding:20px;
+}
+.login-card{
+  background:var(--card);border-radius:20px;padding:40px 36px;width:100%;max-width:400px;
+  box-shadow:0 20px 60px rgba(0,0,0,.25);text-align:center;
+}
+.login-card .logo{justify-content:center;margin-bottom:6px;}
+.login-card h1{font-size:16px;font-weight:600;color:var(--muted);margin:8px 0 26px;}
+.field{text-align:left;margin-bottom:16px;}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;}
+.field input{
+  width:100%;padding:11px 13px;border-radius:10px;border:1.5px solid var(--border);
+  font-size:14px;background:var(--bg);color:var(--text);
+}
+.field input:focus{outline:none;border-color:var(--teal);}
+.btn{
+  border:none;border-radius:10px;padding:12px 18px;font-size:14px;font-weight:700;
+  background:linear-gradient(135deg,var(--green),var(--teal));color:#fff;width:100%;
+  box-shadow:0 4px 14px rgba(11,110,79,.28);
+}
+.btn:hover{filter:brightness(1.05);}
+.btn.secondary{background:var(--green-soft);color:var(--green);box-shadow:none;}
+.btn.outline{background:transparent;border:1.5px solid var(--border);color:var(--text);box-shadow:none;}
+.btn.small{padding:8px 14px;font-size:12.5px;width:auto;}
+.btn.gold{background:linear-gradient(135deg,#e0b954,var(--gold));box-shadow:0 4px 14px rgba(201,162,75,.35);}
+.btn:disabled{opacity:.5;cursor:not-allowed;filter:none;}
+.login-foot{margin-top:18px;font-size:12px;color:var(--muted);}
+
+/* ---------- Empty state ---------- */
+.empty-wrap{max-width:520px;margin:80px auto;text-align:center;padding:0 20px;}
+.empty-wrap .emoji{font-size:52px;margin-bottom:10px;}
+.empty-wrap h2{margin:0 0 8px;}
+.empty-wrap p{color:var(--muted);font-size:14.5px;line-height:1.6;}
+
+/* ---------- Cards ---------- */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;}
+.section-title{font-size:13px;font-weight:800;color:var(--green);text-transform:uppercase;letter-spacing:.6px;margin:0 0 14px;display:flex;align-items:center;gap:8px;}
+
+/* ---------- Dashboard hero ---------- */
+.hero{
+  border-radius:20px;padding:28px 30px;color:#fff;margin-bottom:24px;
+  background:linear-gradient(120deg,var(--green-dark) 0%, var(--green) 45%, var(--teal) 75%, var(--blue) 100%);
+  position:relative;overflow:hidden;
+}
+.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;
+  background:rgba(255,255,255,.08);
+}
+.hero .tag{font-size:12px;background:rgba(255,255,255,.18);padding:4px 10px;border-radius:20px;display:inline-block;margin-bottom:10px;letter-spacing:.4px;}
+.hero h1{margin:0 0 8px;font-size:26px;}
+.hero p{margin:0;opacity:.92;font-size:14.5px;max-width:640px;line-height:1.5;}
+
+.grid-2{display:grid;grid-template-columns:1.3fr 1fr;gap:20px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:820px){.grid-2{grid-template-columns:1fr;} .grid-3{grid-template-columns:1fr;}}
+
+/* ---------- Greeting ---------- */
+.greeting-row{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:18px;}
+.greeting{font-size:23px;font-weight:800;margin:0 0 4px;}
+.greeting-sub{color:var(--muted);font-size:13.5px;margin:0;}
+
+/* ---------- Meta info cards (dates/hours/location) ---------- */
+.meta-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px;}
+@media(max-width:820px){.meta-cards{grid-template-columns:1fr;}}
+.meta-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px;}
+.meta-card .lbl{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:800;color:var(--green);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+.meta-card .val{font-size:15px;font-weight:700;color:var(--text);line-height:1.4;}
+
+.instructor-card{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:20px;}
+.instructor{display:flex;gap:16px;align-items:center;}
+.instructor .photo{
+  width:64px;height:64px;border-radius:50%;
+  background:linear-gradient(135deg,var(--green),var(--blue));
+  color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;flex-shrink:0;
+}
+.instructor .name{font-weight:800;font-size:15.5px;}
+.instructor .title{color:var(--muted);font-size:13px;margin-bottom:6px;}
+.instructor .bio{font-size:12.5px;color:var(--muted);margin:4px 0 10px;max-width:560px;line-height:1.5;}
+.instructor .links{display:flex;gap:10px;font-size:12.5px;}
+.pill-link{background:var(--blue-soft);color:var(--blue);padding:4px 10px;border-radius:20px;text-decoration:none;font-weight:600;}
+
+/* progress */
+.progress-track{background:var(--border);border-radius:20px;height:10px;overflow:hidden;}
+.progress-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--green),var(--teal));transition:width .4s;}
+.progress-label{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-top:8px;}
+
+.stat-box{text-align:center;padding:16px;}
+.stat-box .num{font-size:26px;font-weight:800;color:var(--green);}
+.stat-box .lbl{font-size:12px;color:var(--muted);margin-top:2px;}
+
+/* badges row */
+.badges-row{display:flex;gap:10px;flex-wrap:wrap;}
+.badge-chip{display:flex;align-items:center;gap:6px;background:var(--green-soft);color:var(--green);padding:7px 12px;border-radius:20px;font-size:12.5px;font-weight:700;}
+.badge-chip.locked{background:var(--bg);color:var(--muted);border:1px dashed var(--border);}
+
+/* Leaderboard */
+.lb-row{display:flex;align-items:center;justify-content:space-between;padding:9px 4px;border-bottom:1px solid var(--border);font-size:13.5px;}
+.lb-row:last-child{border-bottom:none;}
+.lb-row.me{background:var(--green-soft);border-radius:8px;padding:9px 8px;font-weight:700;}
+.lb-rank{width:22px;color:var(--muted);font-weight:700;}
+
+/* ---------- Course workspace ---------- */
+.workspace{display:grid;grid-template-columns:250px 1fr;gap:20px;align-items:start;}
+@media(max-width:900px){.workspace{grid-template-columns:1fr;}}
+.sidebar{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;position:sticky;top:80px;}
+.sidebar h3{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin:4px 0 10px;}
+.day-item{
+  display:flex;align-items:center;gap:10px;padding:11px 10px;border-radius:10px;margin-bottom:6px;
+  font-size:13.5px;font-weight:600;cursor:pointer;border:1px solid transparent;
+}
+.day-item .ic{width:22px;text-align:center;}
+.day-item.completed{background:var(--green-soft);color:var(--green);}
+.day-item.current{background:var(--blue-soft);color:var(--blue);border-color:var(--blue);}
+.day-item.locked{color:var(--muted);cursor:not-allowed;opacity:.75;}
+.day-item.active-selected{outline:2px solid var(--teal);}
+.day-item.cert-item{margin-top:14px;border-top:1px dashed var(--border);padding-top:16px;border-radius:10px;font-weight:800;font-size:14px;background:var(--bg);}
+.day-item.cert-item.completed{background:linear-gradient(135deg,var(--green-soft),var(--blue-soft));color:var(--green-dark);box-shadow:0 2px 8px rgba(11,110,79,.15);}
+.day-item.discuss-item{margin-top:8px;background:var(--blue-soft);color:var(--blue);font-weight:800;border-color:transparent;}
+
+.code-form{display:flex;gap:8px;margin-top:10px;}
+.code-form input{flex:1;padding:9px 11px;border-radius:8px;border:1.5px solid var(--border);font-size:14px;letter-spacing:2px;text-transform:uppercase;background:var(--bg);color:var(--text);}
+.msg{font-size:12.5px;margin-top:8px;}
+.msg.ok{color:var(--green);}
+.msg.err{color:var(--danger);}
+
+/* Day detail */
+.day-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.day-header h2{margin:0 0 4px;}
+.status-pill{font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:20px;}
+.status-pill.completed{background:var(--green-soft);color:var(--green);}
+.status-pill.current{background:var(--blue-soft);color:var(--blue);}
+
+.slide-item{border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:10px;background:var(--bg);display:flex;gap:14px;align-items:flex-start;}
+.slide-item h4{margin:0 0 6px;font-size:14px;}
+.slide-item p{margin:0;font-size:13px;color:var(--muted);line-height:1.55;}
+.slide-item .thumb{width:130px;height:80px;border-radius:8px;object-fit:cover;flex-shrink:0;background:var(--border);}
+.slide-item .body{flex:1;min-width:0;}
+
+.lock-box{
+  border:1.5px dashed var(--border);border-radius:12px;padding:22px;text-align:center;color:var(--muted);
+  background:var(--bg);
+}
+.lock-box .ic{font-size:24px;margin-bottom:6px;}
+.unlock-box{border:1px solid var(--border);border-radius:12px;padding:18px;background:var(--bg);}
+
+.quiz-q{margin-bottom:16px;}
+.quiz-q p{font-weight:600;font-size:13.5px;margin:0 0 8px;}
+.quiz-opt{display:block;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:13px;cursor:pointer;}
+.quiz-opt:hover{border-color:var(--teal);}
+.quiz-opt input{margin-right:8px;}
+
+.tab-row{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+.tab-btn{padding:8px 16px;border-radius:20px;border:1.5px solid var(--border);background:var(--card);font-size:13px;font-weight:700;color:var(--muted);}
+.tab-btn.active{background:linear-gradient(135deg,var(--green),var(--teal));color:#fff;border-color:transparent;}
+
+/* certificate */
+.cert-wrap{padding:10px;}
+.certificate{
+  border:6px solid var(--gold);border-radius:14px;padding:40px;text-align:center;
+  background:linear-gradient(180deg,#fffef9,#fff);position:relative;
+}
+.certificate .em{font-size:34px;}
+.certificate h2{margin:8px 0 2px;color:var(--green-dark);}
+.certificate .cname{font-size:26px;font-weight:800;margin:14px 0;color:var(--text);border-bottom:2px solid var(--gold);display:inline-block;padding-bottom:6px;}
+.certificate .course{font-size:15px;color:var(--muted);margin-bottom:18px;}
+.certificate .sig-row{display:flex;justify-content:space-around;margin-top:30px;font-size:12.5px;color:var(--muted);}
+
+/* ---------- Certificate requirements ---------- */
+.req-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;border-radius:12px;background:var(--bg);border:1px solid var(--border);margin-bottom:10px;}
+.req-row.met{background:var(--green-soft);border-color:transparent;}
+.req-row .left{display:flex;align-items:center;gap:10px;font-weight:700;font-size:13.5px;}
+.req-row .ric{width:26px;height:26px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:12.5px;flex-shrink:0;color:var(--muted);border:1px solid var(--border);}
+.req-row.met .ric{background:var(--green);color:#fff;border-color:transparent;}
+.req-row .detail{font-size:12px;color:var(--muted);font-weight:700;white-space:nowrap;}
+.cert-cta-locked{
+  display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-align:center;padding:15px;
+  border-radius:12px;margin-top:18px;background:var(--bg);color:var(--muted);font-weight:800;font-size:13.5px;
+  border:1.5px dashed var(--border);
+}
+.cert-download-box{
+  margin-top:20px;padding:18px;border-radius:14px;background:var(--green-soft);
+  border:1.5px solid var(--green);text-align:center;
+}
+.cert-download-box p{margin:0 0 12px;font-size:13px;color:var(--green-dark);font-weight:600;}
+
+/* ---------- Pie chart ---------- */
+.pie-wrap{display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+.pie{
+  width:100px;height:100px;border-radius:50%;flex-shrink:0;position:relative;
+  background:conic-gradient(var(--border) 0deg 360deg);
+}
+.pie .hole{
+  position:absolute;inset:15px;border-radius:50%;background:var(--card);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+}
+.pie .hole .pct{font-weight:800;font-size:17px;color:var(--green);line-height:1.1;}
+.pie .hole .sub{font-size:8.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:2px;}
+.pie-legend{font-size:12.5px;}
+.pie-legend .lg-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.pie-legend .dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+
+/* Instructor demo panel */
+.instr-panel{
+  background:var(--green-soft);border:1.5px dashed var(--green);border-radius:var(--radius);padding:18px;margin-top:22px;
+}
+.instr-panel h3{margin:0 0 4px;color:var(--green-dark);font-size:14px;}
+.instr-panel .desc{font-size:12px;color:var(--muted);margin-bottom:14px;}
+.instr-grid{display:flex;flex-wrap:wrap;gap:10px;}
+.toggle-row{display:flex;align-items:center;gap:12px;background:var(--card);padding:10px 14px;border-radius:10px;flex:1;min-width:220px;}
+.switch{position:relative;width:40px;height:22px;background:var(--border);border-radius:20px;flex-shrink:0;}
+.switch.on{background:var(--green);}
+.switch::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;background:#fff;border-radius:50%;transition:.2s;}
+.switch.on::after{left:20px;}
+
+.footer-note{text-align:center;color:var(--muted);font-size:12px;margin-top:40px;}
+.top-toggle-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);}
+
+/* ---------- AI Assistant ---------- */
+.ai-fab{position:fixed;bottom:24px;right:24px;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--teal),var(--blue));border:none;color:#fff;font-size:24px;box-shadow:0 6px 20px rgba(11,110,79,.35);z-index:80;display:flex;align-items:center;justify-content:center;}
+.ai-fab:hover{filter:brightness(1.05);}
+.ai-panel{position:fixed;bottom:92px;right:24px;width:340px;max-width:90vw;height:460px;max-height:70vh;background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.2);display:flex;flex-direction:column;overflow:hidden;z-index:80;}
+.ai-header{display:flex;align-items:center;gap:8px;padding:14px 16px;background:linear-gradient(120deg,var(--green-dark),var(--teal));color:#fff;font-weight:800;font-size:14px;}
+.ai-tag{font-size:9.5px;background:rgba(255,255,255,.25);padding:2px 7px;border-radius:10px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;}
+.ai-close{margin-left:auto;background:none;border:none;color:#fff;font-size:15px;opacity:.85;}
+.ai-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:var(--bg);}
+.ai-bubble{max-width:82%;padding:9px 12px;border-radius:14px;font-size:12.8px;line-height:1.5;}
+.ai-bubble.ai{background:var(--card);border:1px solid var(--border);align-self:flex-start;border-bottom-left-radius:4px;}
+.ai-bubble.user{background:linear-gradient(135deg,var(--green),var(--teal));color:#fff;align-self:flex-end;border-bottom-right-radius:4px;}
+.ai-suggestions{display:flex;gap:6px;flex-wrap:wrap;padding:0 14px 10px;}
+.ai-chip{background:var(--green-soft);color:var(--green);border:none;border-radius:20px;padding:6px 10px;font-size:11px;font-weight:700;}
+.ai-form{display:flex;gap:8px;padding:12px;border-top:1px solid var(--border);}
+.ai-form input{flex:1;padding:9px 12px;border-radius:20px;border:1.5px solid var(--border);font-size:12.8px;background:var(--bg);color:var(--text);}
+.ai-form button{width:36px;height:36px;border-radius:50%;border:none;background:var(--green);color:#fff;font-size:14px;flex-shrink:0;}
+
+/* ---------- Discussions ---------- */
+.discuss-composer{display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
+.discuss-composer textarea{width:100%;min-height:70px;padding:10px 12px;border-radius:10px;border:1.5px solid var(--border);font-family:inherit;font-size:13px;resize:vertical;background:var(--bg);color:var(--text);}
+.discuss-composer-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+.discuss-composer select{padding:8px 10px;border-radius:8px;border:1.5px solid var(--border);font-size:12.5px;background:var(--bg);color:var(--text);}
+.post-card{border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:12px;background:var(--bg);}
+.post-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.post-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--blue));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0;}
+.post-meta{font-size:12px;color:var(--muted);}
+.post-meta b{color:var(--text);}
+.post-tag{margin-left:auto;font-size:10.5px;font-weight:700;background:var(--blue-soft);color:var(--blue);padding:3px 9px;border-radius:20px;}
+.post-text{font-size:13.5px;line-height:1.55;margin:4px 0 8px;}
+.post-actions{display:flex;gap:14px;font-size:12px;color:var(--muted);}
+.post-actions button{background:none;border:none;color:var(--muted);font-size:12px;font-weight:700;padding:0;cursor:pointer;}
+.post-actions button.liked{color:var(--green);}
+.reply-box{margin-top:10px;padding-left:16px;border-left:2px solid var(--border);}
+.reply-item{font-size:12.5px;margin-bottom:6px;color:var(--text);}
+.reply-item b{margin-right:4px;}
+.reply-form{display:flex;gap:8px;margin-top:8px;}
+.reply-form input{flex:1;padding:7px 10px;border-radius:8px;border:1.5px solid var(--border);font-size:12.5px;background:var(--card);color:var(--text);}
+
+.print-only{display:none;}
+@media print{
+  body *{visibility:hidden;}
+  #certificatePrintArea, #certificatePrintArea *{visibility:visible;}
+  #certificatePrintArea{position:absolute;left:0;top:0;width:100%;}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= LOGIN VIEW ================= -->
+<div id="view-login" class="login-wrap">
+  <div class="login-card">
+    <div class="logo"><img class="logo-img" src="sdaia_logo_small.png" alt="SDAIA logo"><span class="logo-divider"></span><span class="academy-tag">Academy</span></div>
+    <h1>Sign in to your learning portal</h1>
+    <form id="loginForm">
+      <div class="field"><label>Full name</label><input id="loginName" type="text" placeholder="e.g. Sara Al-Otaibi" required></div>
+      <div class="field"><label>Email</label><input id="loginEmail" type="email" placeholder="you@example.com" required></div>
+      <button class="btn" type="submit">Continue</button>
+    </form>
+    <div class="login-foot">By continuing you agree this is a demo prototype of SDAIA Academy's learning portal.</div>
+  </div>
+</div>
+
+<!-- ================= APP SHELL (post login) ================= -->
+<div id="view-app" class="hidden">
+  <div class="topbar">
+    <div class="logo"><img class="logo-img" src="sdaia_logo_small.png" alt="SDAIA logo"><span class="logo-divider"></span><span class="academy-tag">Academy</span></div>
+    <div class="topbar-actions">
+      <div class="top-toggle-row">
+        <span>🎓 Instructor demo</span>
+        <div id="instructorSwitch" class="switch"></div>
+      </div>
+      <button class="icon-btn" id="darkBtn" title="Toggle dark mode">🌙</button>
+      <button class="icon-btn" id="bellBtn" title="Notifications">🔔<span id="notifCount" class="badge-dot hidden">0</span></button>
+      <div id="notifPanel" class="notif-panel hidden"></div>
+      <div class="user-chip"><div class="avatar" id="topAvatar">?</div><span id="topName">Student</span></div>
+      <button class="icon-btn" id="signOutBtn" title="Sign out">🚪</button>
+    </div>
+  </div>
+
+  <!-- ---- Empty state: not accepted yet ---- -->
+  <div id="view-empty" class="empty-wrap hidden">
+    <div class="emoji">📭</div>
+    <h2>No active workshops yet</h2>
+    <p>Once you're accepted into an SDAIA Academy workshop, it will appear here automatically with the full course dashboard — schedule, instructor info, slides, labs and more.</p>
+    <div style="margin-top:20px;">
+      <button class="btn small gold" id="simulateAcceptBtn">✨ Simulate acceptance (demo)</button>
+    </div>
+  </div>
+
+  <!-- ---- Dashboard (overview before entering course) ---- -->
+  <div id="view-dashboard" class="page hidden">
+    <div class="greeting-row">
+      <div>
+        <h1 class="greeting" id="dashGreeting">Hello there 👋</h1>
+        <p class="greeting-sub">Here's what's happening in your program.</p>
+      </div>
+      <button class="btn small outline" id="icsBtn">＋ Add to calendar</button>
+    </div>
+
+    <div class="hero">
+      <span class="tag">✅ Accepted</span>
+      <h1 id="courseTitle">Applied AI &amp; Machine Learning Bootcamp</h1>
+      <p id="courseDesc">A hands-on 5-day intensive covering data foundations, machine learning, and deep learning — built to take you from core concepts to a deployed capstone project.</p>
+    </div>
+
+    <div class="meta-cards">
+      <div class="meta-card"><div class="lbl">📅 Dates</div><div class="val" id="metaDate">Aug 9 – Aug 13, 2026</div></div>
+      <div class="meta-card"><div class="lbl">⏰ Daily hours</div><div class="val" id="metaHours">9:00 AM – 3:00 PM</div></div>
+      <div class="meta-card"><div class="lbl">📍 Location</div><div class="val" id="metaLoc">SDAIA Academy, Riyadh — Building 3</div></div>
+    </div>
+
+    <div class="card instructor-card">
+      <div class="instructor">
+        <div class="photo">DA</div>
+        <div>
+          <div class="name">Dr. Sara Al-Qahtani</div>
+          <div class="title">Senior AI Instructor, SDAIA Academy</div>
+          <div class="bio" id="instructorBio">Leads applied AI &amp; ML instruction for public-sector cohorts and has trained 900+ government practitioners.</div>
+          <div class="links">
+            <a class="pill-link" href="#" onclick="return false;">🔗 LinkedIn</a>
+            <a class="pill-link" href="mailto:sara.alqahtani@sdaia.gov.sa">✉️ Email</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="section-title">📊 Your progress</div>
+        <div class="progress-track"><div id="dashProgressFill" class="progress-fill" style="width:0%"></div></div>
+        <div class="progress-label"><span id="dashProgressLabel">Day 0/5 completed</span><span id="dashAvgQuiz">Avg quiz: —</span></div>
+        <div class="badges-row" style="margin-top:16px;" id="badgesRow"></div>
+      </div>
+      <div class="card">
+        <div class="section-title">🥧 Attendance</div>
+        <div class="pie-wrap" id="dashPieWrap"></div>
+      </div>
+    </div>
+
+    <div class="grid-3" style="margin-top:20px;">
+      <div class="card stat-box"><div class="num" id="statAttendance">0%</div><div class="lbl">Attendance</div></div>
+      <div class="card stat-box"><div class="num" id="statQuiz">—</div><div class="lbl">Average quiz score</div></div>
+      <div class="card stat-box"><div class="num" id="statDay">1</div><div class="lbl">Current day</div></div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <div class="section-title">🏆 Cohort leaderboard <span style="font-weight:400;text-transform:none;color:var(--muted);font-size:11px;">(demo data)</span></div>
+      <div id="leaderboard"></div>
+    </div>
+
+    <div style="text-align:center;margin-top:26px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn" style="width:auto;padding:13px 34px;" id="enterCourseBtn">Enter course workspace →</button>
+      <button class="btn gold" style="width:auto;padding:13px 34px;" id="viewCertFromDashBtn">🎓 View certificate</button>
+    </div>
+  </div>
+
+  <!-- ---- Course workspace ---- -->
+  <div id="view-course" class="page hidden">
+    <button class="btn small outline" id="backToDashBtn" style="width:auto;margin-bottom:16px;">← Back to overview</button>
+
+    <div class="card" style="margin-bottom:20px;">
+      <div class="grid-2">
+        <div>
+          <div class="section-title">🎟️ Attendance code</div>
+          <p style="font-size:12.5px;color:var(--muted);margin:0 0 4px;">Enter the code your instructor shares in class to mark today's attendance.</p>
+          <div class="code-form">
+            <input id="codeInput" maxlength="6" placeholder="ENTER CODE">
+            <button class="btn small" style="width:auto;" id="codeSubmitBtn">Submit</button>
+          </div>
+          <div id="codeMsg" class="msg"></div>
+        </div>
+        <div>
+          <div class="section-title" style="margin-bottom:8px;">🥧 Course attendance</div>
+          <div class="pie-wrap" id="coursePieWrap"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="workspace">
+      <div class="sidebar">
+        <h3>Course days</h3>
+        <div id="dayList"></div>
+        <div id="certNavItem" class="day-item cert-item">
+          <span class="ic">🔒</span><span>Certificate</span>
+        </div>
+        <div id="discussNavItem" class="day-item discuss-item">
+          <span class="ic">💬</span><span>Discussions</span>
+        </div>
+      </div>
+
+      <div id="mainPanel"></div>
+    </div>
+  </div>
+
+  <!-- ---- AI Study Assistant (floating) ---- -->
+  <button class="ai-fab" id="aiFab" title="AI Study Assistant">🤖</button>
+  <div class="ai-panel hidden" id="aiPanel">
+    <div class="ai-header">🤖 AI Study Buddy <span class="ai-tag">demo</span><button class="ai-close" id="aiCloseBtn">✕</button></div>
+    <div class="ai-messages" id="aiMessages"></div>
+    <div class="ai-suggestions" id="aiSuggestions"></div>
+    <form class="ai-form" id="aiForm">
+      <input id="aiInput" placeholder="Ask about today's slides...">
+      <button type="submit">➤</button>
+    </form>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   SDAIA Academy — front-end demo prototype
+   All data is mocked and kept in localStorage for persistence
+   across reloads. No real backend is involved.
+============================================================ */
+
+const STORAGE_KEY = 'sdaia_academy_state_v1';
+
+function defaultState(){
+  return {
+    student: null,
+    accepted: true,
+    instructorMode: false,
+    darkMode: false,
+    completedDays: 1,
+    currentView: 'dashboard',
+    selectedDayIndex: 1,
+    showingCertificate: false,
+    showingDiscussions: false,
+    discussionPosts: [
+      {id:1, author:'Fatimah S.', day:0, text:'The distinction between AI, ML and DL finally clicked for me after today\'s session. Anyone have a good mental model for explaining it to a colleague?', time:'2 days ago', likes:4, likedByMe:false, replies:[
+        {author:'Ahmed R.', text:'I like thinking of them as nested circles — AI is the big goal, ML is one way to get there, DL is a specific ML technique.', time:'2 days ago'}
+      ]},
+      {id:2, author:'Khalid B.', day:1, text:'Is anyone else stuck on the missing-data question in the Day 2 lab? Not sure whether to drop rows or impute.', time:'1 day ago', likes:2, likedByMe:false, replies:[]},
+      {id:3, author:'Noura M.', day:null, text:'Quick tip: the attendance code is case-insensitive here, but double check for extra spaces if it keeps failing!', time:'6 hours ago', likes:6, likedByMe:false, replies:[]}
+    ],
+    notifications: [
+      {t:'Welcome to SDAIA Academy! Your seat for the AI & ML Bootcamp is confirmed.', time:'2 days ago'},
+      {t:'Day 1 materials are ready — attendance code will be shared in class.', time:'1 day ago'}
+    ],
+    course: {
+      title: 'Applied AI & Machine Learning Bootcamp',
+      description: 'A hands-on 5-day intensive covering data foundations, machine learning, and deep learning — built to take you from core concepts to a deployed capstone project.',
+      date: 'Aug 9 – Aug 13, 2026',
+      hours: '9:00 AM – 3:00 PM',
+      location: 'SDAIA Academy, Riyadh — Building 3',
+      instructor: {name:'Dr. Sara Al-Qahtani', title:'Senior AI Instructor, SDAIA Academy', bio:'Leads applied AI & ML instruction for public-sector cohorts and has trained 900+ government practitioners.', email:'sara.alqahtani@sdaia.gov.sa', linkedin:'#', initials:'DA'}
+    },
+    days: [
+      {
+        title:'Introduction to AI & Data Foundations',
+        topics:[
+          {h:'What is Artificial Intelligence?', p:'History, key milestones, and how AI, ML, and Deep Learning relate to one another.'},
+          {h:'The Data Lifecycle', p:'Collection, cleaning, exploration, and governance — the foundation every model depends on.'},
+          {h:'Saudi Arabia\'s National AI Strategy', p:'How SDAIA and Vision 2030 are shaping the Kingdom\'s data & AI ecosystem.'},
+          {h:'Setting Up Your Toolkit', p:'Python, Jupyter, and the core libraries you\'ll use all week.'}
+        ],
+        lab:{unlocked:true, prompt:'Submit the link to your Day 1 data exploration notebook.', link:''},
+        test:{unlocked:true, taken:false, score:null, questions:[
+          {q:'Which field is most concerned with enabling computers to learn patterns from data without being explicitly programmed?', options:['Machine Learning','Web Development','Computer Networking','Graphic Design'], correct:0},
+          {q:'What is typically the FIRST stage of the data lifecycle?', options:['Model deployment','Data collection','Hyperparameter tuning','Certification'], correct:1},
+          {q:'SDAIA stands for the Saudi Data and ___ Authority.', options:['Automation','AI','Analytics','Architecture'], correct:1}
+        ]},
+        attended:true, attendanceCode:'AI2026'
+      },
+      {
+        title:'Python for Data Science & Statistics',
+        topics:[
+          {h:'NumPy & Pandas Essentials', p:'Vectorized operations and dataframes for fast, readable data work.'},
+          {h:'Descriptive Statistics', p:'Mean, variance, distributions, and why they matter before modeling.'},
+          {h:'Data Visualization', p:'Telling a clear story with Matplotlib and Seaborn.'},
+          {h:'Handling Messy Real-World Data', p:'Missing values, outliers, and data quality checks.'}
+        ],
+        lab:{unlocked:false, prompt:'Submit the link to your Day 2 statistics & visualization notebook.', link:''},
+        test:{unlocked:false, taken:false, score:null, questions:[
+          {q:'Which Python library is most associated with dataframes?', options:['Pandas','Flask','Django','Requests'], correct:0},
+          {q:'Which measure describes the spread of a dataset around its mean?', options:['Median','Variance','Mode','Index'], correct:1},
+          {q:'What should you typically do with missing data before modeling?', options:['Ignore it always','Assess and handle it appropriately','Delete the whole dataset','Rename the columns'], correct:1}
+        ]},
+        attended:false, attendanceCode:'DATA02'
+      },
+      {
+        title:'Machine Learning Algorithms',
+        topics:[
+          {h:'Supervised vs Unsupervised Learning', p:'Regression, classification, and clustering — when to use each.'},
+          {h:'Model Training & Evaluation', p:'Train/test splits, cross-validation, and key metrics.'},
+          {h:'Decision Trees & Ensembles', p:'From a single tree to random forests and gradient boosting.'},
+          {h:'Avoiding Overfitting', p:'Regularization and practical tips for generalizing well.'}
+        ],
+        lab:{unlocked:false, prompt:'Submit the link to your Day 3 classification model notebook.', link:''},
+        test:{unlocked:false, taken:false, score:null, questions:[
+          {q:'Predicting a continuous value like a house price is an example of:', options:['Classification','Clustering','Regression','Encryption'], correct:2},
+          {q:'What technique combines many decision trees for better performance?', options:['Random Forest','Linear Regression','K-Means','Tokenization'], correct:0},
+          {q:'Overfitting means a model:', options:['Performs well on new, unseen data','Performs poorly on training data','Memorizes training data but generalizes poorly','Cannot be trained at all'], correct:2}
+        ]},
+        attended:false, attendanceCode:'ML2026'
+      },
+      {
+        title:'Deep Learning & Neural Networks',
+        topics:[
+          {h:'Neural Network Fundamentals', p:'Neurons, layers, weights, and activation functions.'},
+          {h:'Training with Backpropagation', p:'How networks learn from error using gradient descent.'},
+          {h:'CNNs & Computer Vision Basics', p:'How convolutional networks power image recognition.'},
+          {h:'Intro to Large Language Models', p:'A practical look at how modern LLMs are built and used.'}
+        ],
+        lab:{unlocked:false, prompt:'Submit the link to your Day 4 neural network notebook.', link:''},
+        test:{unlocked:false, taken:false, score:null, questions:[
+          {q:'The algorithm used to update neural network weights during training is called:', options:['Backpropagation','Bootstrapping','Tokenizing','Clustering'], correct:0},
+          {q:'CNNs are especially well-suited for:', options:['Tabular spreadsheets only','Image data','Text-only tasks','Database indexing'], correct:1},
+          {q:'A function that introduces non-linearity into a neural network layer is called a(n):', options:['Optimizer','Activation function','Data loader','Index'], correct:1}
+        ]},
+        attended:false, attendanceCode:'DL2026'
+      },
+      {
+        title:'Capstone Project & Deployment',
+        topics:[
+          {h:'From Notebook to Product', p:'Packaging a trained model into something usable.'},
+          {h:'Deployment Basics', p:'APIs, containers, and serving predictions in the real world.'},
+          {h:'Responsible & Ethical AI', p:'Bias, fairness, and governance considerations.'},
+          {h:'Capstone Presentations', p:'Present your project to instructors and peers.'}
+        ],
+        lab:{unlocked:false, prompt:'Submit the link to your final capstone project repository or demo.', link:''},
+        test:{unlocked:false, taken:false, score:null, questions:[
+          {q:'Exposing a trained model so other applications can send it data and get predictions is commonly done via a(n):', options:['API','Spreadsheet','Slide deck','Text file'], correct:0},
+          {q:'Considering fairness and bias in a model\'s predictions falls under:', options:['Responsible AI','Data compression','Networking','UI design'], correct:0},
+          {q:'What typically happens on the final day of the bootcamp?', options:['Course registration', 'Capstone presentations', 'Syllabus review', 'Account creation'], correct:1}
+        ]},
+        attended:false, attendanceCode:'CAP2026'
+      }
+    ]
+  };
+}
+
+let state = loadState();
+
+function loadState(){
+  const base = defaultState();
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      const saved = JSON.parse(raw);
+      const merged = Object.assign({}, base, saved);
+      merged.course = Object.assign({}, base.course, saved.course, {
+        instructor: Object.assign({}, base.course.instructor, (saved.course && saved.course.instructor) || {})
+      });
+      merged.discussionPosts = Array.isArray(saved.discussionPosts) ? saved.discussionPosts : base.discussionPosts;
+      merged.days = Array.isArray(saved.days) && saved.days.length === base.days.length ? saved.days : base.days;
+      return merged;
+    }
+  }catch(e){}
+  return base;
+}
+function saveState(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+function notify(text){
+  state.notifications.unshift({t:text, time:'just now'});
+  saveState();
+}
+function initials(name){
+  return name.trim().split(/\s+/).slice(0,2).map(w=>w[0].toUpperCase()).join('');
+}
+
+/* ---------------- Login ---------------- */
+document.getElementById('loginForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const name = document.getElementById('loginName').value.trim();
+  const email = document.getElementById('loginEmail').value.trim();
+  if(!name || !email) return;
+  state.student = {name, email};
+  saveState();
+  boot();
+});
+
+/* ---------------- Boot / routing ---------------- */
+function boot(){
+  if(!state.student){
+    document.getElementById('view-login').classList.remove('hidden');
+    document.getElementById('view-app').classList.add('hidden');
+    return;
+  }
+  document.getElementById('view-login').classList.add('hidden');
+  document.getElementById('view-app').classList.remove('hidden');
+  document.getElementById('topName').textContent = state.student.name;
+  document.getElementById('topAvatar').textContent = initials(state.student.name);
+  document.body.classList.toggle('dark', state.darkMode);
+  document.getElementById('instructorSwitch').classList.toggle('on', state.instructorMode);
+
+  const showEmpty = !state.accepted;
+  document.getElementById('view-empty').classList.toggle('hidden', !showEmpty);
+  document.getElementById('view-dashboard').classList.add('hidden');
+  document.getElementById('view-course').classList.add('hidden');
+
+  if(!showEmpty){
+    if(state.currentView === 'course'){
+      document.getElementById('view-course').classList.remove('hidden');
+      renderCourse();
+    } else {
+      document.getElementById('view-dashboard').classList.remove('hidden');
+      renderDashboard();
+    }
+  }
+  renderNotifications();
+}
+
+document.getElementById('simulateAcceptBtn').addEventListener('click', function(){
+  state.accepted = true;
+  notify('🎉 You have been accepted into the Applied AI & ML Bootcamp!');
+  saveState();
+  boot();
+});
+
+document.getElementById('darkBtn').addEventListener('click', function(){
+  state.darkMode = !state.darkMode;
+  saveState();
+  boot();
+});
+
+document.getElementById('bellBtn').addEventListener('click', function(){
+  const p = document.getElementById('notifPanel');
+  p.classList.toggle('hidden');
+});
+
+document.getElementById('instructorSwitch').addEventListener('click', function(){
+  state.instructorMode = !state.instructorMode;
+  saveState();
+  boot();
+});
+
+document.getElementById('signOutBtn').addEventListener('click', function(){
+  state.student = null;
+  state.currentView = 'dashboard';
+  state.showingCertificate = false;
+  state.showingDiscussions = false;
+  saveState();
+  document.getElementById('loginName').value = '';
+  document.getElementById('loginEmail').value = '';
+  document.getElementById('notifPanel').classList.add('hidden');
+  document.getElementById('aiPanel').classList.add('hidden');
+  boot();
+});
+
+document.getElementById('enterCourseBtn').addEventListener('click', function(){
+  state.currentView = 'course';
+  state.selectedDayIndex = Math.min(state.completedDays, state.days.length - 1);
+  state.showingCertificate = false;
+  saveState();
+  boot();
+});
+document.getElementById('backToDashBtn').addEventListener('click', function(){
+  state.currentView = 'dashboard';
+  saveState();
+  boot();
+});
+document.getElementById('viewCertFromDashBtn').addEventListener('click', function(){
+  state.currentView = 'course';
+  state.showingCertificate = true;
+  saveState();
+  boot();
+});
+
+document.getElementById('icsBtn').addEventListener('click', function(){
+  const c = state.course;
+  const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:${c.title}\nLOCATION:${c.location}\nDESCRIPTION:${c.description}\nDTSTART:20260809T090000\nDTEND:20260813T150000\nEND:VEVENT\nEND:VCALENDAR`;
+  const blob = new Blob([ics], {type:'text/calendar'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'sdaia-academy-course.ics';
+  a.click();
+});
+
+function renderNotifications(){
+  const panel = document.getElementById('notifPanel');
+  const count = document.getElementById('notifCount');
+  if(state.notifications.length){
+    count.textContent = state.notifications.length;
+    count.classList.remove('hidden');
+  } else {
+    count.classList.add('hidden');
+  }
+  panel.innerHTML = '<div style="font-weight:800;font-size:12.5px;padding:6px 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;">Notifications</div>' +
+    (state.notifications.length ? state.notifications.map(n=>`<div class="notif-item"><div>${n.t}</div><div class="t">${n.time}</div></div>`).join('') : '<div class="notif-item">No notifications yet.</div>');
+}
+
+/* ---------------- Dashboard ---------------- */
+function computeAvgQuiz(){
+  const scores = state.days.filter(d=>d.test.score !== null).map(d=>d.test.score);
+  if(!scores.length) return null;
+  return Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
+}
+function attendanceSegments(){
+  const total = state.days.length;
+  const elapsed = Math.min(state.completedDays + 1, total);
+  const attended = state.days.slice(0, elapsed).filter(d=>d.attended).length;
+  const missed = elapsed - attended;
+  const upcoming = total - elapsed;
+  return {total, elapsed, attended, missed, upcoming};
+}
+function computeAttendancePct(){
+  const s = attendanceSegments();
+  return Math.round((s.attended/s.total)*100);
+}
+function buildPieChart(containerId){
+  const s = attendanceSegments();
+  const attendedDeg = (s.attended/s.total)*360;
+  const missedDeg = (s.missed/s.total)*360;
+  const wrap = document.getElementById(containerId);
+  if(!wrap) return;
+  wrap.innerHTML = `
+    <div class="pie" id="${containerId}-pie">
+      <div class="hole"><div class="pct">${computeAttendancePct()}%</div><div class="sub">attended</div></div>
+    </div>
+    <div class="pie-legend">
+      <div class="lg-row"><span class="dot" style="background:var(--green);"></span>Attended — ${s.attended}/${s.total} days</div>
+      <div class="lg-row"><span class="dot" style="background:var(--danger);"></span>Missed — ${s.missed}/${s.total} days</div>
+      <div class="lg-row"><span class="dot" style="background:var(--border);"></span>Upcoming — ${s.upcoming}/${s.total} days</div>
+    </div>
+  `;
+  document.getElementById(containerId+'-pie').style.background =
+    `conic-gradient(var(--green) 0deg ${attendedDeg}deg, var(--danger) ${attendedDeg}deg ${attendedDeg+missedDeg}deg, var(--border) ${attendedDeg+missedDeg}deg 360deg)`;
+}
+
+function renderDashboard(){
+  const c = state.course;
+  const firstName = state.student.name.trim().split(/\s+/)[0];
+  document.getElementById('dashGreeting').textContent = `Hello, ${firstName} 👋`;
+  document.getElementById('courseTitle').textContent = c.title;
+  document.getElementById('courseDesc').textContent = c.description;
+  document.getElementById('metaDate').textContent = c.date;
+  document.getElementById('metaHours').textContent = c.hours;
+  document.getElementById('metaLoc').textContent = c.location;
+  document.getElementById('instructorBio').textContent = c.instructor.bio;
+  buildPieChart('dashPieWrap');
+
+  const total = state.days.length;
+  const pct = Math.round((state.completedDays/total)*100);
+  document.getElementById('dashProgressFill').style.width = pct + '%';
+  document.getElementById('dashProgressLabel').textContent = `Day ${state.completedDays}/${total} completed`;
+  const avg = computeAvgQuiz();
+  document.getElementById('dashAvgQuiz').textContent = 'Avg quiz: ' + (avg===null? '—' : avg+'%');
+  document.getElementById('statAttendance').textContent = computeAttendancePct()+'%';
+  document.getElementById('statQuiz').textContent = avg===null? '—' : avg+'%';
+  document.getElementById('statDay').textContent = Math.min(state.completedDays+1, total);
+
+  const badges = [];
+  const attendancePct = computeAttendancePct();
+  badges.push({label:'🎯 Perfect Attendance', earned: attendancePct===100 && state.completedDays>0});
+  badges.push({label:'🧠 Quiz Master (90%+)', earned: avg!==null && avg>=90});
+  badges.push({label:'🚀 Fast Starter', earned: state.completedDays>=1});
+  badges.push({label:'🏅 Bootcamp Graduate', earned: state.completedDays>=total});
+  document.getElementById('badgesRow').innerHTML = badges.map(b=>`<span class="badge-chip ${b.earned?'':'locked'}">${b.label}</span>`).join('');
+
+  const mock = [
+    {name:'Fatimah S.', score:96},
+    {name:'Ahmed R.', score:91},
+    {name:'Noura M.', score:88},
+    {name:'Khalid B.', score:82},
+  ];
+  const me = {name: state.student.name + ' (you)', score: avg===null? 0 : avg, mine:true};
+  const list = [...mock, me].sort((a,b)=>b.score-a.score);
+  document.getElementById('leaderboard').innerHTML = list.map((p,i)=>
+    `<div class="lb-row ${p.mine?'me':''}"><span><span class="lb-rank">#${i+1}</span>${p.name}</span><span>${p.score}%</span></div>`
+  ).join('');
+}
+
+/* ---------------- Course workspace ---------------- */
+function dayStatus(i){
+  if(i < state.completedDays) return 'completed';
+  if(i === state.completedDays) return 'current';
+  return 'locked';
+}
+
+function renderCourse(){
+  buildPieChart('coursePieWrap');
+  renderDayList();
+  renderCertNav();
+  renderDiscussNav();
+  if(state.showingCertificate){
+    renderCertificateView();
+  } else if(state.showingDiscussions){
+    renderDiscussionsView();
+  } else {
+    renderDayDetail(state.selectedDayIndex);
+  }
+}
+
+document.getElementById('codeSubmitBtn').addEventListener('click', function(){
+  const input = document.getElementById('codeInput');
+  const msg = document.getElementById('codeMsg');
+  const day = state.days[state.completedDays] || state.days[state.days.length-1];
+  const val = input.value.trim().toUpperCase();
+  if(!val){ msg.textContent='Enter a code first.'; msg.className='msg err'; return; }
+  if(val === day.attendanceCode){
+    day.attended = true;
+    msg.textContent = '✅ Attendance marked for today.';
+    msg.className = 'msg ok';
+    notify('Attendance marked for ' + day.title + '.');
+    saveState();
+    buildPieChart('coursePieWrap');
+  } else {
+    msg.textContent = '❌ Incorrect code. Ask your instructor for today\'s code.';
+    msg.className = 'msg err';
+  }
+});
+
+function renderDayList(){
+  const wrap = document.getElementById('dayList');
+  wrap.innerHTML = '';
+  state.days.forEach((d,i)=>{
+    const status = dayStatus(i);
+    const icon = status==='completed'?'✓':status==='current'?'▶':'🔒';
+    const div = document.createElement('div');
+    div.className = `day-item ${status} ${(!state.showingCertificate && !state.showingDiscussions && i===state.selectedDayIndex)?'active-selected':''}`;
+    div.innerHTML = `<span class="ic">${icon}</span><span>Day ${i+1}: ${d.title}</span>`;
+    if(status !== 'locked'){
+      div.addEventListener('click', ()=>{
+        state.selectedDayIndex = i;
+        state.showingCertificate = false;
+        state.showingDiscussions = false;
+        saveState();
+        renderDayList();
+        renderCertNav();
+        renderDiscussNav();
+        renderDayDetail(i);
+      });
+    }
+    wrap.appendChild(div);
+  });
+}
+
+function renderCertNav(){
+  const el = document.getElementById('certNavItem');
+  const unlocked = state.completedDays >= state.days.length;
+  el.querySelector('.ic').textContent = unlocked ? '🎓' : '🔒';
+  el.classList.toggle('completed', unlocked);
+  el.classList.toggle('locked', !unlocked);
+  el.classList.toggle('active-selected', state.showingCertificate);
+  el.onclick = () => {
+    state.showingCertificate = true;
+    state.showingDiscussions = false;
+    saveState();
+    renderDayList();
+    renderCertNav();
+    renderDiscussNav();
+    renderCertificateView();
+  };
+}
+
+function renderDiscussNav(){
+  const el = document.getElementById('discussNavItem');
+  el.classList.toggle('active-selected', state.showingDiscussions);
+  el.onclick = () => {
+    state.showingCertificate = false;
+    state.showingDiscussions = true;
+    saveState();
+    renderDayList();
+    renderCertNav();
+    renderDiscussNav();
+    renderDiscussionsView();
+  };
+}
+
+/* ---------------- Workshop discussion board ---------------- */
+function renderDiscussionsView(){
+  const main = document.getElementById('mainPanel');
+  const dayOptions = state.days.map((d,i)=>`<option value="${i}">Day ${i+1}: ${d.title}</option>`).join('');
+  const posts = [...state.discussionPosts].sort((a,b)=>b.id-a.id);
+  main.innerHTML = `
+    <div class="card">
+      <div class="section-title">💬 Workshop discussion board</div>
+      <p style="font-size:12.5px;color:var(--muted);margin:-6px 0 16px;">Ask questions, share tips, and help your cohort — visible to everyone in this workshop.</p>
+      <div class="discuss-composer">
+        <textarea id="postText" placeholder="Ask a question or share something with the cohort..."></textarea>
+        <div class="discuss-composer-row">
+          <select id="postDay"><option value="">General discussion</option>${dayOptions}</select>
+          <button class="btn small" id="postSubmitBtn" style="width:auto;">Post</button>
+        </div>
+      </div>
+      <div id="postsList"></div>
+    </div>`;
+
+  const list = document.getElementById('postsList');
+  list.innerHTML = posts.map(p=>{
+    const tag = p.day===null||p.day===undefined ? 'General' : `Day ${p.day+1}`;
+    return `
+    <div class="post-card" data-id="${p.id}">
+      <div class="post-head">
+        <div class="post-avatar">${initials(p.author)}</div>
+        <div class="post-meta"><b>${p.author}</b> · ${p.time}</div>
+        <div class="post-tag">${tag}</div>
+      </div>
+      <div class="post-text">${p.text}</div>
+      <div class="post-actions">
+        <button class="like-btn ${p.likedByMe?'liked':''}" data-id="${p.id}">👍 ${p.likes}</button>
+        <button class="reply-toggle-btn" data-id="${p.id}">💬 Reply${p.replies.length? ' ('+p.replies.length+')' : ''}</button>
+      </div>
+      <div class="reply-box hidden" id="replyBox-${p.id}">
+        ${p.replies.map(r=>`<div class="reply-item"><b>${r.author}:</b>${r.text} <span style="color:var(--muted);">· ${r.time}</span></div>`).join('')}
+        <div class="reply-form">
+          <input placeholder="Write a reply..." id="replyInput-${p.id}">
+          <button class="btn small" style="width:auto;" data-id="${p.id}" data-action="submit-reply">Send</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('') || '<p style="color:var(--muted);font-size:13px;">No posts yet — be the first to start a discussion!</p>';
+
+  document.getElementById('postSubmitBtn').addEventListener('click', ()=>{
+    const text = document.getElementById('postText').value.trim();
+    if(!text) return;
+    const dayVal = document.getElementById('postDay').value;
+    state.discussionPosts.push({
+      id: Date.now(), author: state.student.name, day: dayVal===''? null : parseInt(dayVal),
+      text, time:'just now', likes:0, likedByMe:false, replies:[]
+    });
+    saveState();
+    notify('Your discussion post was published.');
+    renderDiscussionsView();
+  });
+
+  list.querySelectorAll('.like-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const id = parseInt(btn.dataset.id);
+      const post = state.discussionPosts.find(p=>p.id===id);
+      if(!post) return;
+      post.likedByMe = !post.likedByMe;
+      post.likes += post.likedByMe? 1 : -1;
+      saveState();
+      renderDiscussionsView();
+    });
+  });
+  list.querySelectorAll('.reply-toggle-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.getElementById('replyBox-'+btn.dataset.id).classList.toggle('hidden');
+    });
+  });
+  list.querySelectorAll('[data-action="submit-reply"]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const id = parseInt(btn.dataset.id);
+      const input = document.getElementById('replyInput-'+id);
+      const val = input.value.trim();
+      if(!val) return;
+      const post = state.discussionPosts.find(p=>p.id===id);
+      post.replies.push({author: state.student.name, text: val, time:'just now'});
+      saveState();
+      renderDiscussionsView();
+    });
+  });
+}
+
+function renderDayDetail(i){
+  const d = state.days[i];
+  const status = dayStatus(i);
+  const main = document.getElementById('mainPanel');
+
+  let labSection;
+  if(d.lab.unlocked){
+    labSection = `
+      <div class="unlock-box">
+        <p style="font-size:13px;margin:0 0 10px;">${d.lab.prompt}</p>
+        <div class="code-form">
+          <input id="labLinkInput" placeholder="https://..." style="text-transform:none;letter-spacing:0;" value="${d.lab.link||''}">
+          <button class="btn small" id="labSubmitBtn" style="width:auto;">Submit</button>
+        </div>
+        <div id="labMsg" class="msg ${d.lab.link? 'ok':''}">${d.lab.link? '✅ Submitted: '+d.lab.link : ''}</div>
+      </div>`;
+  } else {
+    labSection = `<div class="lock-box"><div class="ic">🔒</div>Your instructor hasn't opened the project/lab submission for this day yet.</div>`;
+  }
+
+  let testSection;
+  if(!d.test.unlocked){
+    testSection = `<div class="lock-box"><div class="ic">🔒</div>Your instructor hasn't opened today's test yet.</div>`;
+  } else if(d.test.taken){
+    testSection = `<div class="unlock-box"><p style="font-size:14px;font-weight:700;margin:0;">✅ Test completed — score: ${d.test.score}%</p></div>`;
+  } else {
+    testSection = `<div class="unlock-box"><form id="quizForm">` +
+      d.test.questions.map((q,qi)=>`
+        <div class="quiz-q">
+          <p>${qi+1}. ${q.q}</p>
+          ${q.options.map((o,oi)=>`<label class="quiz-opt"><input type="radio" name="q${qi}" value="${oi}" required> ${o}</label>`).join('')}
+        </div>`).join('') +
+      `<button class="btn small" type="submit" style="width:auto;">Submit test</button></form>`;
+  }
+
+  main.innerHTML = `
+    <div class="card">
+      <div class="day-header">
+        <div>
+          <span class="status-pill ${status}">${status==='completed'?'✓ Completed':status==='current'?'▶ In progress':'Locked'}</span>
+          <h2>Day ${i+1}: ${d.title}</h2>
+        </div>
+      </div>
+
+      <div class="tab-row">
+        <button class="tab-btn active" data-tab="slides">📑 Slides</button>
+        <button class="tab-btn" data-tab="lab">💻 Project / Lab</button>
+        <button class="tab-btn" data-tab="test">📝 Test</button>
+      </div>
+
+      <div id="tab-slides">
+        ${d.topics.map((t,ti)=>`<div class="slide-item"><img class="thumb" loading="lazy" src="https://picsum.photos/seed/sdaia-d${i}-s${ti}/260/160" alt="Slide visual for ${t.h}"><div class="body"><h4>Slide ${ti+1}: ${t.h}</h4><p>${t.p}</p></div></div>`).join('')}
+      </div>
+      <div id="tab-lab" class="hidden">${labSection}</div>
+      <div id="tab-test" class="hidden">${testSection}</div>
+    </div>
+  `;
+
+  main.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      main.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      ['slides','lab','test'].forEach(t=>{
+        document.getElementById('tab-'+t).classList.toggle('hidden', t !== btn.dataset.tab);
+      });
+    });
+  });
+
+  if(d.lab.unlocked){
+    document.getElementById('labSubmitBtn').addEventListener('click', ()=>{
+      const val = document.getElementById('labLinkInput').value.trim();
+      if(!val) return;
+      d.lab.link = val;
+      saveState();
+      notify(`Lab submitted for Day ${i+1}.`);
+      document.getElementById('labMsg').textContent = '✅ Submitted: ' + val;
+      document.getElementById('labMsg').className = 'msg ok';
+    });
+  }
+  if(d.test.unlocked && !d.test.taken){
+    document.getElementById('quizForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      let correct = 0;
+      d.test.questions.forEach((q,qi)=>{
+        if(parseInt(fd.get('q'+qi)) === q.correct) correct++;
+      });
+      const score = Math.round((correct/d.test.questions.length)*100);
+      d.test.taken = true;
+      d.test.score = score;
+      saveState();
+      notify(`You scored ${score}% on the Day ${i+1} test.`);
+      renderDayDetail(i);
+    });
+  }
+
+  renderInstructorPanel(i);
+}
+
+/* ---------------- Instructor demo panel ---------------- */
+function renderInstructorPanel(i){
+  const existing = document.getElementById('instrPanelHost');
+  if(existing) existing.remove();
+  if(!state.instructorMode) return;
+  const d = state.days[i];
+  const host = document.createElement('div');
+  host.id = 'instrPanelHost';
+  host.innerHTML = `
+    <div class="instr-panel">
+      <h3>🎓 Instructor controls (demo)</h3>
+      <div class="desc">Simulate what the instructor sees for Day ${i+1}: ${d.title}. These actions unlock content for the student view above.</div>
+      <div class="instr-grid">
+        <div class="toggle-row"><div id="toggleLab" class="switch ${d.lab.unlocked?'on':''}"></div><span>Open project/lab submission</span></div>
+        <div class="toggle-row"><div id="toggleTest" class="switch ${d.test.unlocked?'on':''}"></div><span>Open test</span></div>
+        <div class="toggle-row"><span>Today's attendance code: <b>${d.attendanceCode}</b></span></div>
+        <button class="btn small secondary" id="markCompleteBtn" ${dayStatus(i)!=='current'?'disabled':''}>Mark Day ${i+1} complete →</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('mainPanel').appendChild(host);
+
+  document.getElementById('toggleLab').addEventListener('click', ()=>{
+    d.lab.unlocked = !d.lab.unlocked;
+    saveState();
+    if(d.lab.unlocked) notify(`Project/lab opened for Day ${i+1}.`);
+    renderDayDetail(i);
+  });
+  document.getElementById('toggleTest').addEventListener('click', ()=>{
+    d.test.unlocked = !d.test.unlocked;
+    saveState();
+    if(d.test.unlocked) notify(`Test opened for Day ${i+1}.`);
+    renderDayDetail(i);
+  });
+  const completeBtn = document.getElementById('markCompleteBtn');
+  if(completeBtn){
+    completeBtn.addEventListener('click', ()=>{
+      if(dayStatus(i) !== 'current') return;
+      state.completedDays = Math.min(state.completedDays+1, state.days.length);
+      saveState();
+      notify(`Day ${i+1} marked complete. ${state.completedDays<state.days.length? 'Day '+(state.completedDays+1)+' is now unlocked.' : 'Certificate unlocked!'}`);
+      state.selectedDayIndex = Math.min(state.completedDays, state.days.length-1);
+      saveState();
+      renderCourse();
+    });
+  }
+}
+
+/* ---------------- Certificate ---------------- */
+function certRequirements(){
+  const s = attendanceSegments();
+  const avg = computeAvgQuiz();
+  const lastDay = state.days[state.days.length-1];
+  const req1 = {label:`Attend all ${s.total} sessions`, met: s.attended >= s.total, detail: `${s.attended}/${s.total} attended`};
+  const req2 = {label:'Average quiz score of 70% or higher', met: avg!==null && avg>=70, detail: avg===null? 'No tests taken yet' : `${avg}% current average`};
+  const req3 = {label:'Submit the capstone project', met: !!lastDay.lab.link, detail: lastDay.lab.link? 'Submitted ✓' : 'Not submitted yet'};
+  return [req1, req2, req3];
+}
+
+function renderCertificateView(){
+  const main = document.getElementById('mainPanel');
+  const unlocked = state.completedDays >= state.days.length;
+  const total = state.days.length;
+
+  if(!unlocked){
+    const reqs = certRequirements();
+    const met = reqs.filter(r=>r.met).length;
+    const avg = computeAvgQuiz();
+    main.innerHTML = `
+      <div class="card">
+        <div class="section-title">🎓 Requirements (${met}/${reqs.length} met)</div>
+        <div class="progress-track" style="margin-bottom:16px;"><div class="progress-fill" style="width:${Math.round((met/reqs.length)*100)}%"></div></div>
+        ${reqs.map(r=>`
+          <div class="req-row ${r.met?'met':''}">
+            <div class="left"><span class="ric">${r.met?'✓':'🔒'}</span>${r.label}</div>
+            <div class="detail">${r.detail}</div>
+          </div>`).join('')}
+
+        <div class="grid-3" style="margin-top:18px;">
+          <div class="stat-box" style="padding:14px 8px;"><div class="num">${state.completedDays}/${total}</div><div class="lbl">Days completed</div></div>
+          <div class="stat-box" style="padding:14px 8px;"><div class="num">${computeAttendancePct()}%</div><div class="lbl">Attendance</div></div>
+          <div class="stat-box" style="padding:14px 8px;"><div class="num">${avg===null?'—':avg+'%'}</div><div class="lbl">Average quiz</div></div>
+        </div>
+
+        <div class="cert-cta-locked">🔒 Certificate unlocks after completion</div>
+      </div>`;
+    return;
+  }
+
+  const today = new Date().toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
+  main.innerHTML = `
+    <div class="card cert-wrap">
+      <div id="certificatePrintArea" class="certificate">
+        <div class="em">🎓</div>
+        <div style="font-size:12px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;">SDAIA Academy · Certificate of Completion</div>
+        <h2>This certifies that</h2>
+        <div class="cname">${state.student.name}</div>
+        <div class="course">has successfully completed the <b>${state.course.title}</b><br>${state.course.date} · ${today}</div>
+        <div class="sig-row">
+          <div>________________________<br>Dr. Sara Al-Qahtani<br>Senior AI Instructor</div>
+          <div>________________________<br>SDAIA Academy<br>Program Director</div>
+        </div>
+      </div>
+      <div class="cert-download-box">
+        <p>🎉 Congratulations! Your certificate is ready.</p>
+        <button class="btn gold" style="width:auto;padding:13px 34px;font-size:14.5px;" id="downloadCertBtn">⬇ Download / Print certificate</button>
+      </div>
+    </div>`;
+  document.getElementById('downloadCertBtn').addEventListener('click', ()=> window.print());
+}
+
+/* ---------------- AI Study Assistant (rule-based demo, no external API) ---------------- */
+let aiMessages = [];
+function currentDayForAI(){
+  if(!state.student || !state.accepted) return null;
+  const idx = (state.currentView==='course' && !state.showingCertificate && !state.showingDiscussions)
+    ? state.selectedDayIndex : state.completedDays;
+  return state.days[Math.min(idx, state.days.length-1)];
+}
+function aiGreeting(){
+  const d = currentDayForAI();
+  return d
+    ? `Hi ${state.student.name.split(' ')[0]}! I'm your AI study buddy (demo). Ask me about any topic from <b>Day ${state.selectedDayIndex+1}: ${d.title}</b>, or tap a suggestion below.`
+    : `Hi! I'm your AI study buddy (demo). Once you're in a course day I can help you review slides, summarize topics, or give quiz tips.`;
+}
+function generateAIReply(raw){
+  const text = raw.toLowerCase();
+  const d = currentDayForAI();
+  if(/^(hi|hello|hey)\b/.test(text)) return `Hello! 👋 Ask me to "summarize today's slides" or about any topic title from the current day.`;
+  if(!d) return `Head into a course day first, then ask me things like "summarize today's slides" and I'll pull from that day's content.`;
+  if(text.includes('summar')){
+    return `Here's a quick recap of <b>Day ${state.selectedDayIndex+1}</b>:<br>` + d.topics.map(t=>`• <b>${t.h}</b> — ${t.p}`).join('<br>');
+  }
+  if(text.includes('quiz') || text.includes('test') || text.includes('hint')){
+    return `Study tip: go through each slide heading for today (${d.topics.map(t=>t.h).join(', ')}) and try explaining it out loud in your own words — that's usually exactly what the test checks for.`;
+  }
+  if(text.includes('lab') || text.includes('project') || text.includes('submit')){
+    return `The project/lab for today unlocks once your instructor opens it from their controls. Once it's open, you'll find the submission box under the "Project / Lab" tab.`;
+  }
+  const match = d.topics.find(t => text.includes(t.h.toLowerCase().split(' ').slice(0,2).join(' ')) || t.h.toLowerCase().split(' ').some(w=>w.length>4 && text.includes(w)));
+  if(match) return `<b>${match.h}</b>: ${match.p}`;
+  return `Good question! I don't have an exact match, but today's slides cover: ${d.topics.map(t=>t.h).join(', ')}. Try asking me about one of these by name, or ask me to "summarize today's slides".`;
+}
+function renderAIMessages(){
+  const wrap = document.getElementById('aiMessages');
+  wrap.innerHTML = aiMessages.map(m=>`<div class="ai-bubble ${m.role}">${m.text}</div>`).join('');
+  wrap.scrollTop = wrap.scrollHeight;
+}
+function aiSend(text){
+  if(!text.trim()) return;
+  aiMessages.push({role:'user', text});
+  renderAIMessages();
+  setTimeout(()=>{
+    aiMessages.push({role:'ai', text: generateAIReply(text)});
+    renderAIMessages();
+  }, 350);
+}
+document.getElementById('aiFab').addEventListener('click', ()=>{
+  const panel = document.getElementById('aiPanel');
+  panel.classList.toggle('hidden');
+  if(!panel.classList.contains('hidden') && aiMessages.length===0){
+    aiMessages.push({role:'ai', text: aiGreeting()});
+    renderAIMessages();
+    document.getElementById('aiSuggestions').innerHTML = ["Summarize today's slides","Give me a quiz hint","What's next in the lab?"]
+      .map(s=>`<button class="ai-chip" data-s="${s}">${s}</button>`).join('');
+    document.querySelectorAll('.ai-chip').forEach(chip=>{
+      chip.addEventListener('click', ()=> aiSend(chip.dataset.s));
+    });
+  }
+});
+document.getElementById('aiCloseBtn').addEventListener('click', ()=>{
+  document.getElementById('aiPanel').classList.add('hidden');
+});
+document.getElementById('aiForm').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const input = document.getElementById('aiInput');
+  aiSend(input.value);
+  input.value = '';
+});
+
+/* ---------------- init ---------------- */
+boot();
+</script>
+</body>
+</html>
